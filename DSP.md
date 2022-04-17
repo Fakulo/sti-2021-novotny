@@ -1,5 +1,5 @@
 # Dokument specifikace požadavků <!-- omit in toc -->
-## Komunikační aplikace se serverem <!-- omit in toc -->
+## Komunikační aplikace se serverem (semestrální práce STI)<!-- omit in toc -->
 
 * Verze 1.0
 * Vytvořil Tomáš Novotný
