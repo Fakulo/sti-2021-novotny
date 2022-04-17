@@ -75,7 +75,8 @@ Uživatel může komunikovat přes formulář pomocí předem vytvořených dota
 ### 2.2 Funkční požadavky
 Aplikace bude mít několik jednoduchých funkcí, které může uživatel využít.
 
-(obrázek)
+Obrázek č. 1 - Diagram
+![obr1](https://user-images.githubusercontent.com/57704442/163727006-59b6ddf5-e798-4edf-a479-5787a347e6e3.png)
 
 #### 2.1.1 Získání aktuálního času
 **Popis:** Uživatel bude chtít od serveru aktuální čas.
@@ -141,7 +142,11 @@ Tato kapitola definuje všechny vstupy a výstupy aplikace a jednotlivá řešen
 #### 3.1.1 Uživatelské rozhraní
 Aplikace bude mít jednoduché webové rozhraní. Většinu obrazovky zabere okno pro textové odpovědi serveru. Zprávy se budou zobrazovat pod sebou, vždy se jménem odesílatele. Pod ním se bude nacházet html formulář pro odeslání dat na server. Ten se skládá z textového vstupu a tlačítka.
 
-(obrázek)
+Obrázek č. 2 – Uživatelské rozhraní, kdy chce uživatel poslat zprávu (před kliknutím na tlačítko *odeslat*).
+![obr2](https://user-images.githubusercontent.com/57704442/163727008-a0a653ca-1ab4-4e49-89a1-3dff218e2ae4.png)
+
+Obrázek č. 3 - Uživatelské rozhraní, kdy server poslal odpověď, která se zobrazila uživateli.
+![obr3](https://user-images.githubusercontent.com/57704442/163727010-f459e07a-4c4e-4f9a-a303-39c12740c241.png)
 
 #### 3.1.2 Softwarové rozhraní
 Aplikace bude porovnávat vstup zadaný uživatelem s předem nastavenými možnostmi. 
