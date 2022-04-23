@@ -1,6 +1,6 @@
 import './App.css';
 import { Component } from 'react';
-import { BrowserRouter, Route, Navigate, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import ChatPage from './Chat';
 
 class App extends Component {
