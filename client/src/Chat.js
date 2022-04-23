@@ -76,10 +76,7 @@ class ChatPage extends Component {
     render() {
         return (
             <React.Fragment>
-
-
                 <Form className="col-md-12" onSubmit={this.submitHandler}>
-
                     <Form.Group className="mb-3" controlId="form">
                         <Form.Control ref={this.messagesEndRef} controlId="formArea" as="textarea" rows="10" readOnly={true} value={this.state.messages} />
                     </Form.Group>
@@ -87,7 +84,6 @@ class ChatPage extends Component {
                         <Form.Control as="textarea" placeholder="Napiš něco..." value={this.state.value} onChange={this.inputChange} />
                         <Button variant="primary" type="submit">Odeslat</Button>
                     </Form.Group>
-
                 </Form>
             </React.Fragment>
         );
