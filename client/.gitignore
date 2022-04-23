@@ -4,6 +4,10 @@
 /node_modules
 /.pnp
 .pnp.js
+*.pack
+/node_modules/.cache/default-development
+/node_modules/.cache
+
 
 # testing
 /coverage
