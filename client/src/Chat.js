@@ -12,6 +12,9 @@ class ChatPage extends Component {
         this.inputChange = this.inputChange.bind(this);
         this.messagesEndRef = React.createRef();
     }
+    /**
+     * Funkce skroluje prvek textarea dolů. (Aby byla nová zpráva viditelná.)
+     */
     scrollToBottom = () => {
         const body = document.querySelector('#form');
         body.scrollTo(0, body.scrollHeight);        
@@ -28,11 +31,12 @@ class ChatPage extends Component {
      */
     submitHandler = (event) => {
         event.preventDefault();
+        const text = event.target.formMessage.value.replace(/\n/g, " ");
         this.setState({
-            messages: this.state.messages + "Uživatel: " + event.target.formMessage.value + "\n"
+            messages: this.state.messages + "Uživatel: " + text + "\n"
         });       
 
-        const text = event.target.formMessage.value;
+        console.log(text);
 
         const requestBody = {
             query: `
@@ -49,27 +53,35 @@ class ChatPage extends Component {
             }
         })
             .then(res => {
-                console.log(res);
                 if (res.status !== 200 && res.status !== 201) {
                     throw new Error('Failed');
                 }
                 return res.json();
             })
-            .then(resData => {                
+            .then(resData => {   
+                console.log(resData.data.userQuery);             
                 resData.data.userQuery.forEach(message => {
+                    const tempMessages = this.state.messages;
+                    console.log("----------------- " + message + " -----------------");
                     this.setState({
-                        messages: this.state.messages + "Server: " + message + "\n"
-                    });                    
+                        messages: tempMessages + "Server: " + message + "\n"
+                    }); 
+                    console.log(this.state.messages);
+                                     
                 });
+                this.setState({value: ""});  
             })
 
             .catch(err => {
                 console.log(err.message);
             });
     };
-
+    /**
+     * Funkce změní hodnotu vstupního inputu.
+     * 
+     * @param {*} event 
+     */
     inputChange(event) {
-        //console.log(event.target.value);
         this.setState({ value: event.target.value });
     }
 
@@ -78,7 +90,7 @@ class ChatPage extends Component {
             <React.Fragment>
                 <Form className="col-md-12" onSubmit={this.submitHandler}>
                     <Form.Group className="mb-3" controlId="form">
-                        <Form.Control ref={this.messagesEndRef} controlId="formArea" as="textarea" rows="10" readOnly={true} value={this.state.messages} />
+                        <Form.Control ref={this.messagesEndRef} as="textarea" rows="10" readOnly={true} value={this.state.messages} />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formMessage">
                         <Form.Control as="textarea" placeholder="Napiš něco..." value={this.state.value} onChange={this.inputChange} />

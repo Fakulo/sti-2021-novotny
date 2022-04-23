@@ -4,7 +4,7 @@ const resolver = {
     userQuery: async (args) => {
         try {
             const userInput = args.messageInput.text;
-
+            console.log(userInput);
             // jaký je čas
             let progressTime = [false, false, false];
 
@@ -15,7 +15,7 @@ const resolver = {
             let progressName = [false, false, false];
 
             const words = userInput.replace(/[\p{P}$+<=>^`|~]/gu, '').toLowerCase().trim().split(" ");
-
+            console.log(words);
             let result = [];
 
             words.every(word => {
@@ -88,9 +88,11 @@ const resolver = {
                     result.push("Aktuální kurz ze dne " + rate.date + ": " + rate.amount + " " + rate.code + " = " + rate.rate + " CZK");
                 }
             }
+            console.log(result);
             return result;
 
         } catch (err) {
+            console.log(err);
             return [err.message];
         }
     }
