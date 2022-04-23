@@ -41,7 +41,7 @@ class ChatPage extends Component {
                 }
             `
         };
-        fetch('http://localhost:3000/graphql', {
+        fetch('http://localhost:5000/graphql', {
             method: 'POST',
             body: JSON.stringify(requestBody),
             headers: {
