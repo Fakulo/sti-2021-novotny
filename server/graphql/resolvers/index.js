@@ -5,6 +5,11 @@ const resolver = {
         try {
             const userInput = args.messageInput.text;
             console.log(userInput);
+
+            // odpovědi na neznámé příkazy (7)
+            let defaultAnswers = ["Zkus to znovu", "Na tuto 'otázku' neumím odpovědět","Momentálně mám odstávu, zkus to později","Programátoři mě odflákli, takže na tento dotaz neumím odpovědět",
+             "Hele! Běž si dělat šoufky z někoho jiného", "Zkus příkaz 'help' - to je jediné co ti pomůže", "Nemáš jiné věci na práci, že mě tady spamovat?"]
+
             // jaký je čas
             let progressTime = [false, false, false];
 
@@ -87,6 +92,12 @@ const resolver = {
                 if (rate) {
                     result.push("Aktuální kurz ze dne " + rate.date + ": " + rate.amount + " " + rate.code + " = " + rate.rate + " CZK");
                 }
+            }
+            if(result.length == 0) {
+                const min = 0;
+                const max = defaultAnswers.length-1;
+                const randomNumber = Math.floor(Math.random()*(max-min+1)+min);
+                result.push(defaultAnswers[randomNumber]);
             }
             console.log(result);
             return result;
