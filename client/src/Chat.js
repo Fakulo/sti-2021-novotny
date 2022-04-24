@@ -6,7 +6,8 @@ class ChatPage extends Component {
         super(props);
         this.state = {
             value: '',
-            messages: ''
+            messages: '',
+            buttonDisabled: false
         };
 
         this.inputChange = this.inputChange.bind(this);
@@ -24,19 +25,30 @@ class ChatPage extends Component {
         this.scrollToBottom();
     }
 
+    setVisibility = () => {
+        this.setState({buttonDisabled: false});
+    }    
+
     /**
      * Funkce pro odeslání zprávy.
      * 
      * @param {*} event 
      */
     submitHandler = (event) => {
-        event.preventDefault();
+        var timer;
+        event.preventDefault();        
         const text = event.target.formMessage.value.replace(/\n/g, " ");
-        this.setState({
-            messages: this.state.messages + "Uživatel: " + text + "\n"
-        });       
 
-        console.log(text);
+        if((!text || text.trim() === "" || (text.trim()).length === 0)){
+            this.setState({value: ""});  
+            return;      
+        }else {
+            this.setState({messages: this.state.messages + "Uživatel: " + text + "\n"}); 
+            clearTimeout(timer);
+            timer = setTimeout(this.setVisibility, 2000);
+            this.setState({buttonDisabled: true}); 
+            console.log(timer);
+        }        
 
         const requestBody = {
             query: `
@@ -58,16 +70,13 @@ class ChatPage extends Component {
                 }
                 return res.json();
             })
-            .then(resData => {   
-                console.log(resData.data.userQuery);             
-                resData.data.userQuery.forEach(message => {
-                    const tempMessages = this.state.messages;
-                    console.log("----------------- " + message + " -----------------");
-                    this.setState({
-                        messages: tempMessages + "Server: " + message + "\n"
-                    }); 
-                    console.log(this.state.messages);
-                                     
+            .then(resData => {    
+                let tempMessages = this.state.messages + "Server: ";       
+                resData.data.userQuery.forEach(message => {                    
+                    tempMessages = tempMessages + message + "\n";                 
+                });
+                this.setState({
+                    messages: tempMessages
                 });
                 this.setState({value: ""});  
             })
@@ -94,7 +103,7 @@ class ChatPage extends Component {
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formMessage">
                         <Form.Control as="textarea" placeholder="Napiš něco..." value={this.state.value} onChange={this.inputChange} />
-                        <Button variant="primary" type="submit">Odeslat</Button>
+                        <Button variant="primary" type="submit" disabled={this.state.buttonDisabled}>Odeslat</Button>
                     </Form.Group>
                 </Form>
             </React.Fragment>

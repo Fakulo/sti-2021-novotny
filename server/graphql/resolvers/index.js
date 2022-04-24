@@ -7,8 +7,8 @@ const resolver = {
             console.log(userInput);
 
             // odpovědi na neznámé příkazy (7)
-            let defaultAnswers = ["Zkus to znovu", "Na tuto 'otázku' neumím odpovědět","Momentálně mám odstávu, zkus to později","Programátoři mě odflákli, takže na tento dotaz neumím odpovědět",
-             "Hele! Běž si dělat šoufky z někoho jiného", "Zkus příkaz 'help' - to je jediné co ti pomůže", "Nemáš jiné věci na práci, že mě tady spamovat?"]
+            let defaultAnswers = ["Zkus to znovu", "Na tuto 'otázku' neumím odpovědět","Momentálně mám odstávku, zkus to později","Programátoři mě odflákli, takže na tento dotaz neumím odpovědět",
+             "Hele! Běž si dělat šoufky z někoho jiného", "Zkus příkaz 'help' - to je jediné, co ti pomůže ;)", "Nemáš jiné věci na práci, než mě tady spamovat?"]
 
             // jaký je čas
             let progressTime = [false, false, false];
