@@ -83,6 +83,9 @@ class ChatPage extends Component {
 
             .catch(err => {
                 console.log(err.message);
+                const noConnectionText = "Server: Momentálně si dávám šlofíčka. Zkus to prosím později, nebo popožeň správce serveru, ať mě probudí.";
+                this.setState({messages: this.state.messages + noConnectionText + "\n"});
+                this.setState({value: ""}); 
             });
     };
     /**
