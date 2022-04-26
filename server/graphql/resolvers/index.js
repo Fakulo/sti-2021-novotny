@@ -1,10 +1,10 @@
 const { getRatesEUR } = require("../../getRates");
 
 const resolver = {
-    userQuery: async (args) => {
+    userQuery: async (args, req) => {
         try {
             const userInput = args.messageInput.text;
-            console.log(userInput);
+            console.log("Dotaz: '" + userInput + "' z IP adresy '" + req.hostname + "' směřován na '" + req.originalUrl + "'");
 
             // odpovědi na neznámé příkazy (7)
             let defaultAnswers = ["Zkus to znovu", "Na tuto 'otázku' neumím odpovědět","Momentálně mám odstávku, zkus to později","Programátoři mě odflákli, takže na tento dotaz neumím odpovědět",
@@ -20,7 +20,6 @@ const resolver = {
             let progressName = [false, false, false];
 
             const words = userInput.replace(/[\p{P}$+<=>^`|~]/gu, '').toLowerCase().trim().split(" ");
-            console.log(words);
             let result = [];
 
             words.every(word => {
@@ -99,11 +98,11 @@ const resolver = {
                 const randomNumber = Math.floor(Math.random()*(max-min+1)+min);
                 result.push(defaultAnswers[randomNumber]);
             }
-            console.log(result);
+            console.log("Odpověď: " + result);
             return result;
 
         } catch (err) {
-            console.log(err);
+            console.log("Chyba: " + err.message);
             return [err.message];
         }
     }
