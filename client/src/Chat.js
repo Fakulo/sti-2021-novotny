@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Form, Button } from "react-bootstrap";
+
 class ChatPage extends Component {
 
     constructor(props) {
@@ -102,11 +103,11 @@ class ChatPage extends Component {
             <React.Fragment>
                 <Form className="col-md-12" onSubmit={this.submitHandler}>
                     <Form.Group className="mb-3" controlId="form">
-                        <Form.Control ref={this.messagesEndRef} as="textarea" rows="10" readOnly={true} value={this.state.messages} />
+                        <Form.Control data-testid="receive-textarea" ref={this.messagesEndRef} as="textarea" rows="10" readOnly={true} value={this.state.messages} />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formMessage">
-                        <Form.Control as="textarea" placeholder="Napiš něco..." value={this.state.value} onChange={this.inputChange} />
-                        <Button variant="primary" type="submit" disabled={this.state.buttonDisabled}>Odeslat</Button>
+                        <Form.Control data-testid="send-textarea" as="textarea" placeholder="Napiš něco..." value={this.state.value} onChange={this.inputChange} />
+                        <Button data-testid="send-button" variant="primary" type="submit" disabled={this.state.buttonDisabled}>Odeslat</Button>
                     </Form.Group>
                 </Form>
             </React.Fragment>

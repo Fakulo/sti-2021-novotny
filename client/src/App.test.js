@@ -1,8 +1,19 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import App from './App';
+import Chat from './Chat.js';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+test('jaký je čas', () => {
+  const { getByTestId } = render(<App />);
+  const inputEl = getByTestId("send-textarea");
+
+  window.HTMLElement.prototype.scrollTo = function() {};
+
+  fireEvent.change(inputEl, {
+    target: {
+      value: "ahoj"
+    }
+  });
+
+  expect(inputEl.value).toBe("ahoj");
 });
+
