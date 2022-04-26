@@ -19,16 +19,19 @@ class ChatPage extends Component {
      */
     scrollToBottom = () => {
         const body = document.querySelector('#form');
-        body.scrollTo(0, body.scrollHeight);        
-    }    
+        body.scrollTo(0, body.scrollHeight);
+    }
 
     componentDidUpdate() {
         this.scrollToBottom();
     }
 
+    /**
+     * Funkce zneviditelní tlačítko pro odesílání.
+     */
     setVisibility = () => {
-        this.setState({buttonDisabled: false});
-    }    
+        this.setState({ buttonDisabled: false });
+    }
 
     /**
      * Funkce pro odeslání zprávy.
@@ -36,20 +39,19 @@ class ChatPage extends Component {
      * @param {*} event 
      */
     submitHandler = (event) => {
-        var timer;
-        event.preventDefault();        
+        let timer;
+        event.preventDefault();
         const text = event.target.formMessage.value.replace(/\n/g, " ");
 
-        if((!text || text.trim() === "" || (text.trim()).length === 0)){
-            this.setState({value: ""});  
-            return;      
-        }else {
-            this.setState({messages: this.state.messages + "Uživatel: " + text + "\n"}); 
+        if ((!text || text.trim() === "" || (text.trim()).length === 0)) {
+            this.setState({ value: "" });
+            return;
+        } else {
+            this.setState({ messages: this.state.messages + "Uživatel: " + text + "\n" });
             clearTimeout(timer);
             timer = setTimeout(this.setVisibility, 2000);
-            this.setState({buttonDisabled: true}); 
-            console.log(timer);
-        }        
+            this.setState({ buttonDisabled: true });
+        }
 
         const requestBody = {
             query: `
@@ -71,22 +73,22 @@ class ChatPage extends Component {
                 }
                 return res.json();
             })
-            .then(resData => {    
-                let tempMessages = this.state.messages + "Server: ";       
-                resData.data.userQuery.forEach(message => {                    
-                    tempMessages = tempMessages + message + "\n";                 
+            .then(resData => {
+                let tempMessages = this.state.messages + "Server: ";
+                resData.data.userQuery.forEach(message => {
+                    tempMessages = tempMessages + message + "\n";
                 });
                 this.setState({
                     messages: tempMessages
                 });
-                this.setState({value: ""});  
+                this.setState({ value: "" });
             })
 
             .catch(err => {
                 console.log(err.message);
                 const noConnectionText = "Server: Momentálně si dávám šlofíčka. Zkus to prosím později, nebo popožeň správce serveru, ať mě probudí.";
-                this.setState({messages: this.state.messages + noConnectionText + "\n"});
-                this.setState({value: ""}); 
+                this.setState({ messages: this.state.messages + noConnectionText + "\n" });
+                this.setState({ value: "" });
             });
     };
     /**
