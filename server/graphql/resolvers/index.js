@@ -4,7 +4,7 @@ const resolver = {
     userQuery: async (args, req) => {
         try {
             const userInput = args.messageInput.text;
-            console.log("Dotaz: '" + userInput + "' z IP adresy '" + req.hostname + "' směřován na '" + req.originalUrl + "'");
+            console.log("Dotaz: '" + userInput + "' z IP adresy '" + req.ip + "' směřován na '" + req.originalUrl + "'");
 
             // odpovědi na neznámé příkazy (7)
             let defaultAnswers = ["Zkus to znovu", "Na tuto 'otázku' neumím odpovědět","Momentálně mám odstávku, zkus to později","Programátoři mě odflákli, takže na tento dotaz neumím odpovědět",
