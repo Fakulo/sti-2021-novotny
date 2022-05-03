@@ -60,8 +60,8 @@ class ChatPage extends Component {
                 }
             `
         };
-        //fetch('https://sti-server.vercel.app/graphql', {
-        fetch('http://localhost:5000/graphql', {
+        //fetch('http://localhost:5000/graphql', {
+        fetch('https://sti-server.vercel.app/graphql', {
             method: 'POST',
             body: JSON.stringify(requestBody),
             headers: {
