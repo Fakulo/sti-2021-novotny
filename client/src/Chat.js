@@ -41,7 +41,7 @@ class ChatPage extends Component {
     submitHandler = (event) => {
         let timer;
         event.preventDefault();
-        const text = event.target.formMessage.value.replace(/\n/g, " ");
+        const text = this.state.value.replace(/\n/g, " ");
 
         if ((!text || text.trim() === "" || (text.trim()).length === 0)) {
             this.setState({ value: "" });
@@ -60,7 +60,8 @@ class ChatPage extends Component {
                 }
             `
         };
-        fetch('https://sti-server.vercel.app/graphql', {
+        //fetch('https://sti-server.vercel.app/graphql', {
+        fetch('http://localhost:5000/graphql', {
             method: 'POST',
             body: JSON.stringify(requestBody),
             headers: {
