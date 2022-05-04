@@ -103,14 +103,15 @@ class ChatPage extends Component {
 
     render() {
         return (
-            <React.Fragment>
-                <Form className="col-md-12" onSubmit={this.submitHandler}>
+            <React.Fragment >
+                <h2 className="p-3">Chatovací aplikace</h2>
+                <Form className="col-md-12 p-3 pt-0" onSubmit={this.submitHandler} >
                     <Form.Group className="mb-3" controlId="form">
                         <Form.Control data-testid="receive-textarea" ref={this.messagesEndRef} as="textarea" rows="10" readOnly={true} value={this.state.messages} />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formMessage">
                         <Form.Control data-testid="send-textarea" as="textarea" placeholder="Napiš něco..." value={this.state.value} onChange={this.inputChange} />
-                        <Button data-testid="send-button" variant="primary" type="submit" disabled={this.state.buttonDisabled}>Odeslat</Button>
+                        <Button data-testid="send-button" className="mt-2" variant="primary" type="submit" disabled={this.state.buttonDisabled}>Odeslat</Button>
                     </Form.Group>
                 </Form>
             </React.Fragment>
