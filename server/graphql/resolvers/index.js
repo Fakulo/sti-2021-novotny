@@ -25,7 +25,7 @@ const resolver = {
             let progressBuy = [false, false, false];
 
             // kurz dne dd.mm.rrrr
-            let progressHistory = [false, false];
+            let progressHistory = [false, false, false];
 
             const words = userInput.replace(/[?=]/g, '').replace(/ +(?= )/g, '').toLowerCase().trim().split(" ");
             let result = [];
@@ -88,14 +88,6 @@ const resolver = {
                         }
                         break;
 
-                    case word.match(testRegex).input:
-                        console.log(word);
-                        if (progressHistory[1]) {
-                            dateHistory = word;
-                            console.log(dateHistory);
-                            return false;
-                        }
-                        break;
                     case "jak":
                         if (!progressName[0]) progressName[0] = true;
                         break;
@@ -122,6 +114,11 @@ const resolver = {
                         return false;
 
                     default:
+                        if (word.match(testRegex) && progressHistory[1]) {
+                            progressHistory[2] = true;
+                            dateHistory = word;
+                            return false;
+                        }
                         break;
                 }
                 return true;
@@ -136,11 +133,11 @@ const resolver = {
                 const response = await recommendBuy();
                 response.forEach(element => {
                     result.push(element);
-                });                
+                });
             }
-            if (progressHistory[1]) {
+            if (progressHistory[2]) {
                 const rateHistory = await getRatesEUR(dateHistory);
-                if(dateHistory == rateHistory.date){
+                if (dateHistory == rateHistory.date) {
                     result.push("Kurz ze dne " + rateHistory.date + ": " + rateHistory.amount + " " + rateHistory.code + " = " + rateHistory.rate + " CZK");
                 }
                 else {
