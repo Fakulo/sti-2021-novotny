@@ -80,7 +80,7 @@ describe("Resolvers", () => {
         expect(output[6]).toMatch(/Průměr za poslední 3 dny je: [0-9]{2}.[0-9]{2} CZK/);
     }); 
 
-    test("Nedoporučení nákupu", async () => {
+   /* test("Nedoporučení nákupu", async () => {
         const output = await recommendBuy.recommendBuy("10.05.2022");
 
         expect(recommendAnswers).toContainEqual(output[0]);
@@ -90,7 +90,7 @@ describe("Resolvers", () => {
         expect(output[4]).toContain("nákup EUR!");
         expect(output[5]).toContain("Hrana nákupu:");
         expect(output[6]).toMatch(/Průměr za poslední 3 dny je: [0-9]{2}.[0-9]{2} CZK/);
-    }); 
+    }); */
 
     test("Zobrazení historie - všední den", async () => {
         const output = await callResolver("kurz dne 10.05.2022");
