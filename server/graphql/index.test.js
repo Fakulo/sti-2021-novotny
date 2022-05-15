@@ -2,7 +2,7 @@ const graphQLResolver = require('./resolvers/index');
 
 let defaultAnswers = ["Zkus to znovu", "Na tuto 'otázku' neumím odpovědět", "Momentálně mám odstávku, zkus to později", "Programátoři mě odflákli, takže na tento dotaz neumím odpovědět",
                 "Hele! Běž si dělat šoufky z někoho jiného", "Zkus příkaz 'help' - to je jediné, co ti pomůže ;)", "Nemáš jiné věci na práci, než mě tady spamovat?"];
-let helpAnswers = ["Aktuálně umím příkazy:","jak se jmenuješ","jaký je čas","kurz eur na czk"];
+let helpAnswers = ["Aktuálně umím příkazy:","jak se jmenuješ","jaký je čas","kurz eur na czk","mám koupit eur","kurz dne dd.mm.rrrr"];
 
 async function callResolver(userInput) {
     const input = { messageInput: {text: userInput} };
@@ -23,7 +23,7 @@ describe("Resolvers", () => {
 
     test("Kurz", async () => {
         const output = await callResolver("kurz eur na czk");
-        expect(output[0]).toMatch(/Aktuální kurz ze dne [0-9]{2}.[0-9]{2}.[0-9]{4}: 1 EUR = [0-9]{2},[0-9]{3} CZK/);
+        expect(output[0]).toMatch(/Aktuální kurz ze dne [0-9]{2}.[0-9]{2}.[0-9]{4}: 1 EUR = [0-9]{2}.[0-9]{3} CZK/);
     });
 
     test("Help", async () => {
@@ -56,10 +56,11 @@ describe("Resolvers", () => {
         expect(defaultAnswers).toContainEqual(output[0]);
     });    
 
-    test("Zadání s mezerami a interpukncí", async () => {
-        const output = await callResolver("jak .  se ..-_jmenuješ ");
+    test("Zadání s mezerami", async () => {
+        const output = await callResolver("jak   se    jmenuješ ");
         expect(output[0]).toStrictEqual("Moje jméno je ChatoB :-)");
     }); 
+
     test("Zadání s mezislovy", async () => {
         const output = await callResolver("jak ahoj se máš nebo jmenuješ ");
         expect(output[0]).toStrictEqual("Moje jméno je ChatoB :-)");
