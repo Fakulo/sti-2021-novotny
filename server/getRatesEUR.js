@@ -1,6 +1,10 @@
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
-
-module.exports.getRatesEUR = async () => {
+/**
+ * 
+ * @param {String} date Datum formátu dd.mm.rrr
+ * @returns Vrací kurz eura
+ */
+module.exports.getRatesEUR = async (date="") => {
     try {
         let returnData = {
             amount: 0,
@@ -10,7 +14,15 @@ module.exports.getRatesEUR = async () => {
             country: "",
             date: ""
         }
-        const response = await fetch('https://www.cnb.cz/cs/financni-trhy/devizovy-trh/kurzy-devizoveho-trhu/kurzy-devizoveho-trhu/denni_kurz.txt');
+        let response;
+        if(date == "") {
+            response = await fetch('https://www.cnb.cz/cs/financni-trhy/devizovy-trh/kurzy-devizoveho-trhu/kurzy-devizoveho-trhu/denni_kurz.txt');
+            //console.log("Bez datumu");
+        }else {
+            response = await fetch('https://www.cnb.cz/cs/financni-trhy/devizovy-trh/kurzy-devizoveho-trhu/kurzy-devizoveho-trhu/denni_kurz.txt?date=' + date);
+            //console.log(date);
+        }
+        
         if(!response.ok){
             throw new Error("Kurz momentálně není k dispozici.");
         }
@@ -25,7 +37,7 @@ module.exports.getRatesEUR = async () => {
                 returnData.currency = line[1];
                 returnData.amount = line[2];
                 returnData.code = line[3];
-                returnData.rate = line[4];
+                returnData.rate = line[4].replace(",", ".");
                 return false;
             }
             return true;

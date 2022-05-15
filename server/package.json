@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --collect-coverage",
+    "test2": "jest --coverage",
     "start": "nodemon app.js"
   },
   "author": "Tomáš Novotný",
@@ -20,6 +21,7 @@
   },
   "devDependencies": {
     "@types/mocha": "^9.1.1",
+    "coverage-node": "^6.1.0",
     "easygraphql-tester": "^6.0.1",
     "mocha": "^10.0.0",
     "nodemon": "^2.0.15"

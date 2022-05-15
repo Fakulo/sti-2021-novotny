@@ -60,6 +60,7 @@ class ChatPage extends Component {
                 }
             `
         };
+        //fetch('https://sti-server.vercel.app/graphql', {
         //fetch('http://localhost:5000/graphql', {
         fetch('https://sti-server.vercel.app/graphql', {
             method: 'POST',
@@ -75,7 +76,8 @@ class ChatPage extends Component {
                 return res.json();
             })
             .then(resData => {
-                let tempMessages = this.state.messages + "Server: ";
+                console.log(resData);
+                let tempMessages = this.state.messages + "Server: ";                
                 resData.data.userQuery.forEach(message => {
                     tempMessages = tempMessages + message + "\n";
                 });
