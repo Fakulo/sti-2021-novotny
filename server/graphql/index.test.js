@@ -1,5 +1,5 @@
-const graphQLResolver = require('./resolvers/index');
-const recommendBuy = require('../recommendBuy');
+const graphQLResolver = require("./resolvers/index");
+const recommendBuy = require("../recommendBuy");
 
 let defaultAnswers = ["Zkus to znovu", "Na tuto 'otázku' neumím odpovědět", "Momentálně mám odstávku, zkus to později", "Programátoři mě odflákli, takže na tento dotaz neumím odpovědět",
                 "Hele! Běž si dělat šoufky z někoho jiného", "Zkus příkaz 'help' - to je jediné, co ti pomůže ;)", "Nemáš jiné věci na práci, než mě tady spamovat?"];
