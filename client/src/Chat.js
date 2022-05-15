@@ -76,7 +76,8 @@ class ChatPage extends Component {
                 return res.json();
             })
             .then(resData => {
-                let tempMessages = this.state.messages + "Server: ";
+                console.log(resData);
+                let tempMessages = this.state.messages + "Server: ";                
                 resData.data.userQuery.forEach(message => {
                     tempMessages = tempMessages + message + "\n";
                 });

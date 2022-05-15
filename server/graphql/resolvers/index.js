@@ -1,6 +1,6 @@
-const { getRatesEUR } = require("../../getRates");
-const { format } = require('util');
+const { getRatesEUR } = require("../../getRatesEUR");
 const { getDate } = require("../../getDate");
+const { recommendBuy } = require("../../recommendBuy");
 
 const resolver = {
     userQuery: async (args, req) => {
@@ -30,7 +30,7 @@ const resolver = {
             const words = userInput.replace(/[?=]/g, '').replace(/ +(?= )/g, '').toLowerCase().trim().split(" ");
             let result = [];
 
-            console.log(words);
+            let dateHistory = "";
 
             words.every(word => {
                 switch (word) {
@@ -87,9 +87,8 @@ const resolver = {
                         break;
 
                     case word.match(/[0-9]{2}.[0-9]{2}.[0-9]{4}/)?.input:
-                        console.log("skoro");
                         if (progressHistory[1]) {
-                            console.log("AAAA");
+                            dateHistory = word;
                             return false;
                         }
                             break;
@@ -115,10 +114,10 @@ const resolver = {
                         result.push("jaký je čas");
                         result.push("kurz eur na czk");
                         result.push("mám koupit eur");
+                        result.push("kurz dne dd.mm.rrrr");
                         return false;
 
                     default:
-                        console.log("def");
                         break;
                 }
                 return true;
@@ -130,56 +129,20 @@ const resolver = {
                 }
             }
             if (progressBuy[2]) {
-                const date = new Date();
-                let yesterday = 1;
-                let dayBeforeYesterday = 2;
-                const options = {
-                    day: '2-digit',
-                    month: '2-digit',
-                    year: 'numeric',
+                const response = await recommendBuy();
+                response.forEach(element => {
+                    result.push(element);
+                });                
+            }
+            if (progressHistory[1]) {
+                const rateHistory = await getRatesEUR(dateHistory);
+                if(dateHistory == rateHistory.date){
+                    result.push("Kurz ze dne " + rateHistory.date + ": " + rateHistory.amount + " " + rateHistory.code + " = " + rateHistory.rate + " CZK");
                 }
-                let dateToday = getDate(date, 0, false);
-                const rateToday = await getRatesEUR(dateToday);
-                const rateTodayFloat = parseFloat(rateToday.rate);
-
-                if (rateToday.date < getDate(date, 1, false)) {
-                    dateToday = getDate(date, 1, false);
-                    yesterday = 2;
-                    dayBeforeYesterday = 3;
-                    result.push("Kurzy ČNB za poslední 3 dny: (dnes aktuálně není vypsán kurz)")
+                else {
+                    result.push("Nejbližší kurz ke dni " + dateHistory + " je ze dne " + rateHistory.date + ": " + rateHistory.amount + " " + rateHistory.code + " = " + rateHistory.rate + " CZK");
                 }
-                else { result.push("Kurzy ČNB za poslední 3 dny:") }
 
-                let dateYesterday = new Date();
-                dateYesterday = getDate(date, yesterday, false);
-                const rateYesterday = await getRatesEUR(dateYesterday);
-                const rateYesterdayFloat = parseFloat(rateYesterday.rate);
-
-                let dateDayBeforeYesterday = new Date();
-                dateDayBeforeYesterday = getDate(date, dayBeforeYesterday, false);
-                const rateDayBeforeYesterday = await getRatesEUR(dateDayBeforeYesterday);
-                let rateDayBeforeYesterdayFloat = parseFloat(rateDayBeforeYesterday.rate);
-
-                if (rateToday && rateYesterday && rateDayBeforeYesterday) {
-                    const average = (rateTodayFloat + rateYesterdayFloat + rateDayBeforeYesterdayFloat) / 3;
-                    const tenPercent = (average * 1.1).toFixed(3);
-                    const percent = 100 - (rateTodayFloat * 100 / rateDayBeforeYesterdayFloat);
-
-                    result.push("Kurz dne " + dateDayBeforeYesterday + ": " + rateDayBeforeYesterdayFloat.toFixed(3) + " CZK");
-                    result.push("Kurz dne " + dateYesterday + ": " + rateYesterdayFloat.toFixed(3) + " CZK");
-                    result.push("Kurz dne " + dateToday + ": " + rateTodayFloat.toFixed(3) + " CZK");
-
-                    if (rateDayBeforeYesterdayFloat >= rateYesterdayFloat && rateYesterdayFloat >= rateTodayFloat) {
-                        result.push("Na základě těchto dat DOPURUČUJI nákup EUR! Cena totiž KLESÁ! Rozdíl činí: " + percent.toFixed(2) + " %");
-                        result.push("Průměr je: " + average.toFixed(2));
-                        result.push("10 % je: " + tenPercent);
-                    }
-                    else if (tenPercent > rateToday.rate) {
-                        result.push("Na základě těchto dat NEDOPURUČUJI nákup EUR!");
-                        result.push("Průměr je: " + average.toFixed(2));
-                        result.push("10 % je: " + tenPercent);
-                    }
-                }
             }
             if (result.length == 0) {
                 const min = 0;
