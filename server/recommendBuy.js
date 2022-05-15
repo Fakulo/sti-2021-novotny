@@ -48,7 +48,7 @@ module.exports.recommendBuy = async (datetest="") => {
       returnData.push("Kurz dne " + dateToday + ": " + rateTodayFloat.toFixed(3) + " CZK");
 
       if (rateDayBeforeYesterdayFloat >= rateYesterdayFloat && rateYesterdayFloat >= rateTodayFloat) {
-        returnData.push("DOPURUČUJI nákup EUR! Cena totiž KLESÁ! Rozdíl činí: " + percent.toFixed(2) + " %");
+        returnData.push("DOPURUČUJI nákup EUR! Rozdíl činí: " + percent.toFixed(2) + " %");
         returnData.push("Hrana nákupu: (rezerva): " + difference.toFixed(3) + " CZK");
       }
       else if (tenPercent < rateToday.rate) {returnData.push("DOPURUČUJI nákup EUR! Kurz nesoupá o více než 10 %!");

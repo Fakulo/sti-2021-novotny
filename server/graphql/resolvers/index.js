@@ -32,6 +32,8 @@ const resolver = {
 
             let dateHistory = "";
 
+            var testRegex = /[0-9]{2}.[0-9]{2}.[0-9]{4}/;
+
             words.every(word => {
                 switch (word) {
                     case "mám":
@@ -86,9 +88,11 @@ const resolver = {
                         }
                         break;
 
-                    case word.match(/[0-9]{2}.[0-9]{2}.[0-9]{4}/)?.input:
+                    case word.match(testRegex).input:
+                        console.log(word);
                         if (progressHistory[1]) {
                             dateHistory = word;
+                            console.log(dateHistory);
                             return false;
                         }
                         break;
