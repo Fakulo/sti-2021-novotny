@@ -91,7 +91,7 @@ const resolver = {
                             dateHistory = word;
                             return false;
                         }
-                            break;
+                        break;
                     case "jak":
                         if (!progressName[0]) progressName[0] = true;
                         break;
@@ -142,7 +142,6 @@ const resolver = {
                 else {
                     result.push("Nejbližší kurz ke dni " + dateHistory + " je ze dne " + rateHistory.date + ": " + rateHistory.amount + " " + rateHistory.code + " = " + rateHistory.rate + " CZK");
                 }
-
             }
             if (result.length == 0) {
                 const min = 0;
@@ -155,7 +154,6 @@ const resolver = {
             return result;
 
         } catch (err) {
-            console.log("Chyba: " + err.message);
             return [err.message];
         }
     }

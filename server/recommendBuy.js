@@ -5,13 +5,17 @@ const { getRatesEUR } = require("./getRatesEUR");
  * 
  * @returns Doporučí zda nakoupit eura nebo ne.
  */
-module.exports.recommendBuy = async () => {
+module.exports.recommendBuy = async (datetest="") => {
   try {
-    const date = new Date();
+    let date;
+    if(datetest==""){date = new Date();}
+    else{date = new Date(datetest);}
+    
     let returnData = [];
     let yesterday = 1;
     let dayBeforeYesterday = 2;
     let dateToday = getDate(date, 0, false);
+    let dateTEST = getDate(date, 0, true);
     const rateToday = await getRatesEUR(dateToday);
     const rateTodayFloat = parseFloat(rateToday.rate);
 
@@ -37,22 +41,24 @@ module.exports.recommendBuy = async () => {
       const average = (rateTodayFloat + rateYesterdayFloat + rateDayBeforeYesterdayFloat) / 3;
       const tenPercent = (average * 1.1).toFixed(3);
       const percent = 100 - (rateTodayFloat * 100 / rateDayBeforeYesterdayFloat);
+      const difference = tenPercent - rateTodayFloat;
 
       returnData.push("Kurz dne " + dateDayBeforeYesterday + ": " + rateDayBeforeYesterdayFloat.toFixed(3) + " CZK");
       returnData.push("Kurz dne " + dateYesterday + ": " + rateYesterdayFloat.toFixed(3) + " CZK");
       returnData.push("Kurz dne " + dateToday + ": " + rateTodayFloat.toFixed(3) + " CZK");
 
       if (rateDayBeforeYesterdayFloat >= rateYesterdayFloat && rateYesterdayFloat >= rateTodayFloat) {
-        returnData.push("Na základě těchto dat DOPURUČUJI nákup EUR! Cena totiž KLESÁ! Rozdíl činí: " + percent.toFixed(2) + " %");
-        returnData.push("Průměr je: " + average.toFixed(2));
-        returnData.push("10 % je: " + tenPercent);
+        returnData.push("DOPURUČUJI nákup EUR! Cena totiž KLESÁ! Rozdíl činí: " + percent.toFixed(2) + " %");
+        returnData.push("Hrana nákupu: (rezerva): " + difference.toFixed(3) + " CZK");
       }
-      else if (tenPercent > rateToday.rate) {
-        returnData.push("Na základě těchto dat NEDOPURUČUJI nákup EUR!");
-        returnData.push("Průměr je: " + average.toFixed(2));
-        returnData.push("10 % je: " + tenPercent);
+      else if (tenPercent < rateToday.rate) {returnData.push("DOPURUČUJI nákup EUR! Kurz nesoupá o více než 10 %!");
+        returnData.push("Hrana nákupu: (zbývá): " + difference.toFixed(3) + " CZK");}
+      else {returnData.push("NEDOPURUČUJI nákup EUR!");
+        returnData.push("Hrana nákupu: (zbývá)" + difference.toFixed(3) + " CZK");}
+
+      returnData.push("Průměr za poslední 3 dny je: " + average.toFixed(2) + " CZK");      
       }
-    }
+      
     //console.log(returnData);
     return returnData;
   }
