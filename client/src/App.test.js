@@ -22,6 +22,7 @@ describe('Test clienta', () => {
     user.type(inputEl, "Ahoj");
     user.click(buttonEl);
 
+    await new Promise(resolve => setTimeout(resolve, 1000));
     await waitFor(() => {
       inputEl = screen.getByTestId("send-textarea");
       expect(inputEl.value).toBe("");
