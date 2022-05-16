@@ -15,7 +15,7 @@
 - [3 Specifikace požadavků](#3-specifikace-požadavků)
   - [3.1 Funkční požadavky](#31-funkční-požadavky)
     - [3.1.1 Doporučení nákupu EUR](#311-doporučení-nákupu-eur)
-    - [3.2 Časová náročnost](#32-časová-náročnost)
+  - [3.2 Časová náročnost](#32-časová-náročnost)
 
 ## 1. Úvod
 ### 1.1 Účel
@@ -23,7 +23,7 @@ V rámci tohoto dokumentu se budeme zabývat specifikováním **rozšiřujícíc
 
 ## 2. Celkový popis
 ### 2.1 Funkční požadavky
-Aplikace bude mít několik jednoduchých funkcí, které může uživatel využít.
+Aplikace bude mít novou funkci, kterou může uživatel využít.
 
 #### 2.1.1 Doporučení nákupu EUR
 **Popis:** Uživatel bude chtít od serveru doporučit nákup EUR.
@@ -76,7 +76,7 @@ Pozn.:
 * *Může se stát, že v pondělí do 15:00 budou poslední 3 kurzy stejné (neděle, sobota, pátek). Pro neděli a sobotu platí, že nejbližší vydaný kurz je páteční.*
 
 
-#### 3.2 Časová náročnost
+### 3.2 Časová náročnost
 Odhad tvorby rozšiřujících funkcí je přibližně 20 hodin.
 
 
