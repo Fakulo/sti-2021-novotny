@@ -15,10 +15,10 @@ module.exports.getDate = (startingDate, number, add) => {
     let date;
     if (add) {
         date = new Date(new Date().setDate(startingDate.getDate() + number));
-        return new Intl.DateTimeFormat('cs-CZ', options).format(date).replaceAll(" ","");
+        return new Intl.DateTimeFormat('cs-CZ', options).format(date).replace(" ","").replace(" ","");
       } else {
         date = new Date(new Date().setDate(startingDate.getDate() - number));
-        return new Intl.DateTimeFormat('cs-CZ', options).format(date).replaceAll(" ","");
+        return new Intl.DateTimeFormat('cs-CZ', options).format(date).replace(" ","").replace(" ","");
       }
 }
 
